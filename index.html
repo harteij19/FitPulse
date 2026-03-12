@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FitPulse — Fitness Tracker</title>
+    <meta name="description" content="Track your workouts, monitor progress, and crush your fitness goals with FitPulse." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ───── Sidebar ───── -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <span class="brand-icon">🔥</span>
+        <span class="brand-text">Fit<span class="accent">Pulse</span></span>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="#" class="nav-link active" data-section="dashboard" id="nav-dashboard">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Dashboard
+        </a>
+        <a href="#" class="nav-link" data-section="log" id="nav-log">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Log Workout
+        </a>
+        <a href="#" class="nav-link" data-section="history" id="nav-history">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            History
+        </a>
+        <a href="#" class="nav-link" data-section="progress" id="nav-progress">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            Progress
+        </a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="user-badge">
+            <div class="avatar">JP</div>
+            <div class="user-info">
+                <span class="user-name">John Patel</span>
+                <span class="user-role">Pro Member</span>
+            </div>
+        </div>
+    </div>
+</aside>
+
+<!-- ───── Mobile header ───── -->
+<header class="mobile-header">
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle sidebar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <span class="brand-text">Fit<span class="accent">Pulse</span></span>
+</header>
+
+<!-- ───── Main content ───── -->
+<main class="main">
+
+    <!-- DASHBOARD SECTION -->
+    <section class="section active" id="section-dashboard">
+        <div class="section-header">
+            <h1>Dashboard</h1>
+            <p class="subtitle" id="greeting">Good evening! Here's your fitness overview.</p>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="stats-grid">
+            <div class="stat-card stat-card--purple">
+                <div class="stat-icon">🏋️</div>
+                <div class="stat-body">
+                    <span class="stat-value" id="stat-total-workouts">0</span>
+                    <span class="stat-label">Total Workouts</span>
+                </div>
+            </div>
+            <div class="stat-card stat-card--blue">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-body">
+                    <span class="stat-value" id="stat-total-calories">0</span>
+                    <span class="stat-label">Calories Burned</span>
+                </div>
+            </div>
+            <div class="stat-card stat-card--green">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-body">
+                    <span class="stat-value" id="stat-total-duration">0<small>min</small></span>
+                    <span class="stat-label">Total Duration</span>
+                </div>
+            </div>
+            <div class="stat-card stat-card--orange">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-body">
+                    <span class="stat-value" id="stat-today-calories">0</span>
+                    <span class="stat-label">Today's Calories</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="charts-row">
+            <div class="card chart-card">
+                <h2 class="card-title">Weekly Calorie Burn</h2>
+                <canvas id="calorieChart"></canvas>
+            </div>
+            <div class="card chart-card">
+                <h2 class="card-title">Weekly Duration (min)</h2>
+                <canvas id="durationChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Recent Workouts -->
+        <div class="card">
+            <h2 class="card-title">Recent Workouts</h2>
+            <div class="table-wrap">
+                <table class="data-table" id="recent-table">
+                    <thead>
+                        <tr><th>Exercise</th><th>Type</th><th>Duration</th><th>Calories</th><th>Date</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOG WORKOUT SECTION -->
+    <section class="section" id="section-log">
+        <div class="section-header">
+            <h1>Log a Workout</h1>
+            <p class="subtitle">Record your latest session and keep the streak alive!</p>
+        </div>
+        <div class="card form-card">
+            <form id="workout-form" autocomplete="off">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="w-name">Exercise Name</label>
+                        <input type="text" id="w-name" placeholder="e.g. Morning Run" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="w-type">Type</label>
+                        <select id="w-type" required>
+                            <option value="Cardio">Cardio</option>
+                            <option value="Strength">Strength</option>
+                            <option value="Flexibility">Flexibility</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="w-duration">Duration (min)</label>
+                        <input type="number" id="w-duration" min="1" placeholder="30" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="w-calories">Calories Burned</label>
+                        <input type="number" id="w-calories" min="0" placeholder="250" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="w-date">Date</label>
+                        <input type="date" id="w-date" required />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" id="btn-submit-workout">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Add Workout
+                </button>
+            </form>
+            <div class="toast" id="toast">Workout logged successfully! 🎉</div>
+        </div>
+    </section>
+
+    <!-- HISTORY SECTION -->
+    <section class="section" id="section-history">
+        <div class="section-header">
+            <h1>Workout History</h1>
+            <p class="subtitle">All your recorded sessions in one place.</p>
+        </div>
+        <div class="card">
+            <div class="history-controls">
+                <input type="text" id="history-search" class="search-input" placeholder="🔍  Search workouts..." />
+                <select id="history-filter" class="filter-select">
+                    <option value="All">All Types</option>
+                    <option value="Cardio">Cardio</option>
+                    <option value="Strength">Strength</option>
+                    <option value="Flexibility">Flexibility</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="table-wrap">
+                <table class="data-table" id="history-table">
+                    <thead>
+                        <tr><th>Exercise</th><th>Type</th><th>Duration</th><th>Calories</th><th>Date</th><th></th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRESS SECTION -->
+    <section class="section" id="section-progress">
+        <div class="section-header">
+            <h1>Progress</h1>
+            <p class="subtitle">Visualize your fitness journey over time.</p>
+        </div>
+        <div class="charts-row">
+            <div class="card chart-card chart-card--full">
+                <h2 class="card-title">Daily Calorie Trend (Last 14 Days)</h2>
+                <canvas id="progressCalorieChart"></canvas>
+            </div>
+        </div>
+        <div class="charts-row">
+            <div class="card chart-card chart-card--full">
+                <h2 class="card-title">Daily Duration Trend (Last 14 Days)</h2>
+                <canvas id="progressDurationChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
